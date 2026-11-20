@@ -3,6 +3,27 @@
 Real-time 1v1 debugging battles. Two players get the same buggy code;
 the first to make every unit test pass wins and takes Elo from the loser.
 
+## Screenshots
+
+### Login
+![Login page](docs/screenshots/login.png)
+
+### Lobby
+![Lobby with Elo rating, stats and Find Match](docs/screenshots/lobby.png)
+
+### Matchmaking
+![Searching for an opponent](docs/screenshots/matchmaking.png)
+
+### Battle arena (both players see the same buggy code)
+| Player 1 | Player 2 |
+|---|---|
+| ![Arena - player 1 view](docs/screenshots/arena-player1.png) | ![Arena - player 2 view](docs/screenshots/arena-player2.png) |
+
+### Match result
+| Winner | Loser |
+|---|---|
+| ![Victory screen with Elo gain](docs/screenshots/victory.png) | ![Defeat screen with Elo loss](docs/screenshots/defeat.png) |
+
 ## Tech
 - **Client:** React (Vite), Tailwind CSS v4, Monaco Editor, Socket.io client, React Router
 - **Server:** Node.js, Express 5, MongoDB (Mongoose), Socket.io, JWT, bcrypt
