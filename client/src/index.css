@@ -1,0 +1,89 @@
+/* This one line loads all of Tailwind CSS (v4 style). */
+@import "tailwindcss";
+
+/* ============================================================
+   "Crimson Night" theme
+   Named colours used all over the app, e.g. bg-night, text-gold,
+   border-line. Tailwind v4 turns every --color-* below into
+   bg-*, text-*, border-* ... classes automatically.
+   ============================================================ */
+@theme {
+  --color-night: #0b0a0f;          /* page background (near black) */
+  --color-panel: #17151d;          /* cards / glass panels */
+  --color-panel-2: #221f2a;        /* inputs, inner boxes */
+  --color-line: rgb(245 198 107 / 0.14); /* thin gold hairline borders */
+  --color-ink: #f5f1ea;            /* main text (warm white) */
+  --color-mist: #b3aca3;           /* secondary text */
+  --color-crimson: #e11d48;        /* main accent (buttons, your progress) */
+  --color-crimson-light: #fb7185;  /* crimson text on dark */
+  --color-ember: #f97316;          /* warm orange */
+  --color-gold: #f5c66b;           /* highlights, Elo, links */
+
+  --font-sans: "Noto Sans JP", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Cinzel", "Noto Serif JP", Georgia, serif;
+}
+
+/* Base look: near-black night with a soft crimson glow rising from below. */
+body {
+  @apply text-ink antialiased;
+  background-color: var(--color-night);
+  background-image:
+    radial-gradient(1200px 500px at 50% 110%, rgb(225 29 72 / 0.22), transparent 70%),
+    radial-gradient(700px 400px at 95% 100%, rgb(249 115 22 / 0.10), transparent 70%),
+    radial-gradient(900px 600px at 5% -10%, rgb(245 198 107 / 0.05), transparent 65%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Glass look for every panel that uses bg-panel (extra to the colour itself). */
+.bg-panel {
+  background-image: linear-gradient(180deg, rgb(30 27 36 / 0.85), rgb(17 15 21 / 0.92));
+  box-shadow: 0 14px 34px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 240 210 / 0.05);
+  backdrop-filter: blur(12px);
+}
+
+/* Primary buttons: crimson → ember gradient with a soft glow. */
+.bg-crimson {
+  background-image: linear-gradient(120deg, #be123c 0%, #e11d48 45%, #f97316 100%);
+  box-shadow: 0 6px 22px rgb(225 29 72 / 0.3);
+}
+
+/* Small helpers */
+::selection { background: rgb(225 29 72 / 0.5); color: #fff; }
+:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+/* Phones: no fixed background (iOS ignores it) and lighter blur for speed. */
+@media (max-width: 640px) {
+  body { background-attachment: scroll; }
+  .bg-panel { backdrop-filter: none; }
+}
+
+/* ---------- Ensō brush ring: paints itself in ---------- */
+.enso { overflow: visible; filter: drop-shadow(0 0 10px var(--enso)); }
+.enso path { fill: none; stroke: var(--enso); stroke-linecap: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: enso-draw 1.6s cubic-bezier(.6, 0, .2, 1) forwards; }
+.enso-spin { animation: enso-spin 6s linear infinite; }
+@keyframes enso-draw { to { stroke-dashoffset: 0; } }
+@keyframes enso-spin { to { transform: rotate(360deg); } }
+
+/* searching rings around the swords */
+.pulse-ring { animation: pulse-ring 1.6s ease-out infinite; }
+@keyframes pulse-ring { from { transform: scale(.85); opacity: .9; } to { transform: scale(1.45); opacity: 0; } }
+
+/* gentle entrance for pages */
+.fade-up { animation: fade-up .5s ease both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* browser autofill: keep our dark input instead of the yellow box */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-ink);
+  -webkit-box-shadow: 0 0 0 1000px #121017 inset;
+  caret-color: var(--color-ink);
+  transition: background-color 9999s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enso path { animation: none; stroke-dashoffset: 0; }
+  .enso-spin, .pulse-ring, .fade-up { animation: none; }
+}
